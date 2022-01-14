@@ -59,3 +59,22 @@ def test_daily_min_string():
 
     with pytest.raises(TypeError):
         error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
+
+def test_attach_names():
+    """Test attaching names to patient data in simple data structure"""
+    from inflammation.models import attach_names
+
+    data = np.array([[1., 2., 3.],
+                     [4., 5., 6.]])
+    names = ['Alice', 'Bob']
+    test_output = [
+        {
+            'name': 'Alice',
+            'data': np.array([1., 2., 3.]),
+        },
+        {
+            'name': 'Bob',
+            'data': np.array([4., 5., 6.]),
+        },
+    ]
+    npt.assert_equal(attach_names(data, names), test_output)
