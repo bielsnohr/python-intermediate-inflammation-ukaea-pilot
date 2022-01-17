@@ -54,6 +54,17 @@ def attach_names(data, names):
         patients.append({'name': name, 'data': patient_data})
     return patients
 
+def patient_normalise(data):
+    """Normalise patient data from a 2D inflammation data array.
+
+    :param data: 2D inflammation data array, 0th axis (i.e. rows) are patients
+    """
+    max = np.nanmax(data, axis=1)
+    with np.errstate(invalid='ignore', divide='ignore'):
+        normalised = data / max[:, np.newaxis]
+    normalised[np.isnan(normalised)] = 0
+    normalised[normalised < 0] = 0
+    return normalised
 
 # TODO(lesson-design) Add Patient class
 # TODO(lesson-design) Implement data persistence
