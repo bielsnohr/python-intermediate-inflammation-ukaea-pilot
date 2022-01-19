@@ -11,13 +11,17 @@ def test_create_patient():
 
 
 def test_add_observation():
-    from inflammation.models import Patient
+    from inflammation.models import Patient, Observation
 
     name = 'Alice'
     p = Patient(name=name)
     p.add_observation(value=3, day=0)
 
     assert (p.observations[0].day, p.observations[0].value) == (0, 3)
+
+    # With a dataclass implementation, the below would be possible, making
+    # testing much easier
+    # assert p.observations[0] == Observation(0, 3)
 
 
 def test_create_doctor():
