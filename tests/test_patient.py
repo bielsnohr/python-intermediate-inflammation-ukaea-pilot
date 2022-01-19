@@ -26,3 +26,22 @@ def test_create_doctor():
     name = 'Bob'
     d = Doctor(name=name)
     assert d.name == name
+
+
+def test_add_patients_to_doctor():
+    from inflammation.models import Doctor
+
+    name = 'Bob'
+    d = Doctor(name=name)
+    days = (0, 1, 2)
+    alice_values = (3, 3, 3)
+    danny_values = (3, 5, 6)
+    d.add_patient(name='Alice', values=alice_values, days=days)
+    d.add_patient(name='Danny', values=danny_values, days=days)
+    alice = d.patients[0]
+    danny = d.patients[1]
+    for i in range(len(days)):
+        assert (alice.observations[i].day, alice.observations[i].value) == (
+            days[i], alice_values[i])
+        assert (danny.observations[i].day, danny.observations[i].value) == (
+            days[i], danny_values[i])

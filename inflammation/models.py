@@ -104,5 +104,19 @@ class Patient(Person):
         self.observations.append(new_observation)
         return new_observation
 
+
+class Doctor(Person):
+    def __init__(self, name):
+        super().__init__(name)
+        self.patients = []
+
+    def add_patient(self, name, values, days):
+        if len(values) != len(days):
+            raise ValueError("Values and days to not match.")
+        patient = Patient(name=name)
+        for value, day in zip(values, days):
+            patient.add_observation(value, day)
+        self.patients.append(patient)
+
 # TODO(lesson-design) Implement data persistence
 # TODO(lesson-design) Add Doctor class
